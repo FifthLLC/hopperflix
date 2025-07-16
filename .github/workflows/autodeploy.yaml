@@ -3,7 +3,7 @@ name: CI/CD
 on:
   push:
     branches:
-      - main
+      - minas/hopper
   pull_request:
 
 jobs:
@@ -17,7 +17,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18' # Downgraded for better compatibility
+          node-version: '18'
 
       - name: Install Yarn
         run: npm install -g yarn
@@ -26,7 +26,6 @@ jobs:
         run: echo "Starting dependency install..."
 
       - name: Install dependencies
-        # Temporarily removing --frozen-lockfile to see if install hangs
         run: yarn install
 
       - name: Debug - After Install
