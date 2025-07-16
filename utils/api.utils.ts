@@ -7,7 +7,9 @@ import {
   OpenAIError,
 } from '@/types/api';
 
-function isValidApiResponse<T>(response: unknown): response is ApiResponse<T> {
+export function isValidApiResponse<T>(
+  response: unknown
+): response is ApiResponse<T> {
   return (
     typeof response === 'object' &&
     response !== null &&
@@ -16,7 +18,7 @@ function isValidApiResponse<T>(response: unknown): response is ApiResponse<T> {
   );
 }
 
-function isValidSuccessResponse<T>(
+export function isValidSuccessResponse<T>(
   response: unknown
 ): response is ApiSuccessResponse<T> {
   return (

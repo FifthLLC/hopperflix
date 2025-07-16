@@ -11,7 +11,8 @@
     "deploy:prod": "sst deploy --stage production",
     "remove": "sst remove",
     "console": "sst console",
-    "dev:sst": "sst dev"
+    "dev:sst": "sst dev",
+    "test": "jest --passWithNoTests"
   },
   "dependencies": {
     "@heroui/button": "2.2.22",
@@ -45,6 +46,11 @@
     "@eslint/js": "9.25.1",
     "@next/eslint-plugin-next": "15.3.1",
     "@react-types/shared": "3.30.0",
+    "@testing-library/dom": "^10.4.0",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.3.0",
+    "@testing-library/user-event": "^14.6.1",
+    "@types/jest": "^30.0.0",
     "@types/node": "22.15.3",
     "@types/react": "18.3.3",
     "@types/react-dom": "18.3.0",
@@ -62,11 +68,14 @@
     "eslint-plugin-react-hooks": "5.2.0",
     "eslint-plugin-unused-imports": "4.1.4",
     "globals": "16.0.0",
+    "jest": "^30.0.4",
+    "jest-environment-jsdom": "^30.0.4",
     "postcss": "8.5.3",
     "prettier": "3.5.3",
     "sst": "^3.17.10",
     "tailwind-variants": "0.3.0",
     "tailwindcss": "3.4.16",
+    "ts-jest": "^29.4.0",
     "typescript": "5.6.3"
   }
 }

@@ -3,7 +3,6 @@ import type { ErrorDisplayProps } from '@/types';
 import { CONTENT_SUGGESTIONS } from '@/utils/constants';
 
 export default function ErrorDisplay({ error }: ErrorDisplayProps) {
-  console.log('error', error);
   if (!error) return null;
   const errorMessage = typeof error === 'string' ? error : error?.message;
   const errorSuggestions = typeof error === 'object' ? error?.suggestions : [];
