@@ -1,3 +1,4 @@
+import { HTTP_STATUS } from '@/utils/constants';
 import { NextRequest, NextResponse } from 'next/server';
 
 import { fetchImdbMovieInfo } from '@/utils/fetchImdbTitle';
@@ -20,7 +21,10 @@ export async function POST(request: NextRequest) {
     }
 
     if (!url) {
-      return NextResponse.json({ error: 'URL is required' }, { status: 400 });
+      return NextResponse.json(
+        { error: 'URL is required' },
+        { status: HTTP_STATUS.BAD_REQUEST }
+      );
     }
 
     const movieInfo = await fetchImdbMovieInfo(url);
@@ -28,7 +32,7 @@ export async function POST(request: NextRequest) {
     if (!movieInfo || !movieInfo.title) {
       return NextResponse.json(
         { error: 'Failed to extract movie info from IMDB URL' },
-        { status: 404 }
+        { status: HTTP_STATUS.NOT_FOUND }
       );
     }
 
@@ -38,7 +42,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json(
       { error: 'Failed to fetch IMDB title' },
-      { status: 500 }
+      { status: HTTP_STATUS.INTERNAL_SERVER_ERROR }
     );
   }
 }

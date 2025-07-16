@@ -1,9 +1,10 @@
+import { HTTP_STATUS } from '@/utils/constants';
 import { NextRequest, NextResponse } from 'next/server';
 
+import { ImdbMovieInfoWithUrl } from '@/types';
+import { fetchImdbMovieInfo } from '@/utils/fetchImdbTitle';
 import { validateContent } from '@/utils/guardrailService';
 import { isValidImdbUrl } from '@/utils/validateImdbUrl';
-import { fetchImdbMovieInfo } from '@/utils/fetchImdbTitle';
-import { ImdbMovieInfoWithUrl } from '@/types';
 
 export async function POST(request: NextRequest) {
   try {
@@ -20,7 +21,7 @@ export async function POST(request: NextRequest) {
           blockedContent: ['description'],
           suggestions: ['Please provide a description.'],
         },
-        { status: 400 }
+        { status: HTTP_STATUS.BAD_REQUEST }
       );
     }
 
@@ -37,7 +38,7 @@ export async function POST(request: NextRequest) {
           blockedContent: [description],
           suggestions: descResult.suggestions || [],
         },
-        { status: 403 }
+        { status: HTTP_STATUS.FORBIDDEN }
       );
     }
 
@@ -77,7 +78,7 @@ export async function POST(request: NextRequest) {
           blockedContent: blockedMovies,
           suggestions: ['Remove inappropriate movies or try different ones.'],
         },
-        { status: 403 }
+        { status: HTTP_STATUS.FORBIDDEN }
       );
     }
 
@@ -98,7 +99,7 @@ export async function POST(request: NextRequest) {
         blockedContent: [],
         suggestions: ['Please try again later.'],
       },
-      { status: 500 }
+      { status: HTTP_STATUS.INTERNAL_SERVER_ERROR }
     );
   }
 }

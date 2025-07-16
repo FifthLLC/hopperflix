@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 
-import { MOVIES } from '@/utils/constants';
+import { HTTP_STATUS, MOVIES } from '@/utils/constants';
 
 let sessionImdbMovies: string[] = [];
 
@@ -24,7 +24,7 @@ export async function POST(request: Request) {
   } catch (e) {
     return NextResponse.json(
       { success: false, error: 'Invalid request' },
-      { status: 400 }
+      { status: HTTP_STATUS.BAD_REQUEST }
     );
   }
 }
