@@ -1,6 +1,6 @@
-import { HTTP_STATUS } from '@/utils/constants';
 import { NextRequest, NextResponse } from 'next/server';
 
+import { HTTP_STATUS } from '@/utils/constants';
 import { ImdbMovieInfoWithUrl } from '@/types';
 import { fetchImdbMovieInfo } from '@/utils/fetchImdbTitle';
 import { validateContent } from '@/utils/guardrailService';

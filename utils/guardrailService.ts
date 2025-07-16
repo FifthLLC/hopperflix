@@ -10,7 +10,6 @@ import {
   ContentGuardrailResponse,
   GuardrailConfig,
 } from '@/types/guardrail';
-
 import { processJSONBody } from '@/utils/api.utils';
 
 // Default guardrail configuration

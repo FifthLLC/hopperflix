@@ -1,7 +1,8 @@
-import { RecommendationFormProps } from '@/types';
 import DescriptionInput from './DescriptionInput';
 import ImdbUrlInput from './ImdbUrlInput';
 import SubmitButton from './SubmitButton';
+
+import { RecommendationFormProps } from '@/types';
 
 export default function RecommendationForm({
   description,

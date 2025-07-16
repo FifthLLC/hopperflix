@@ -1,5 +1,3 @@
-import { RecommendationData, RecommendationRequest } from './index';
-
 import { ImdbMovieInfo } from '@/types';
 
 interface OpenAIChoice {

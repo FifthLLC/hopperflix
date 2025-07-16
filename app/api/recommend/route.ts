@@ -1,3 +1,5 @@
+import type { ImdbMovieInfoWithUrl } from '@/types';
+
 import { NextRequest, NextResponse } from 'next/server';
 
 import { RecommendationData, RecommendationRequest } from '@/types';
@@ -18,7 +20,6 @@ import {
 import { validateContent } from '@/utils/guardrailService';
 import { isValidImdbUrl } from '@/utils/validateImdbUrl';
 import { fetchImdbMovieInfo } from '@/utils/fetchImdbTitle';
-import type { ImdbMovieInfoWithUrl } from '@/types';
 import { getUserMessage, SYSTEM_PROMPT } from '@/utils/prompts';
 
 const apiKey = process.env.OPENAI_API_KEY;

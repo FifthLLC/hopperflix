@@ -1,8 +1,9 @@
 'use client';
 
+import type { ErrorBoundaryProps, ErrorBoundaryState } from '@/types';
+
 import React from 'react';
 import { Button } from '@heroui/button';
-import type { ErrorBoundaryProps, ErrorBoundaryState } from '@/types';
 
 class ErrorBoundary extends React.Component<
   ErrorBoundaryProps,

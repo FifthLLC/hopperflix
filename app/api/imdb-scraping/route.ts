@@ -1,6 +1,6 @@
-import { HTTP_STATUS } from '@/utils/constants';
 import { NextRequest, NextResponse } from 'next/server';
 
+import { HTTP_STATUS } from '@/utils/constants';
 import { fetchImdbMovieInfo } from '@/utils/fetchImdbTitle';
 
 export async function POST(request: NextRequest) {

@@ -1,6 +1,8 @@
-import { ImdbMovieInfo } from '@/types';
-import { load } from 'cheerio';
 import type { Element } from 'domhandler';
+
+import { load } from 'cheerio';
+
+import { ImdbMovieInfo } from '@/types';
 
 export async function fetchImdbTitle(url: string): Promise<string | null> {
   try {

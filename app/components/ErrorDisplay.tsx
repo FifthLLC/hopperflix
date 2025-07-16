@@ -1,5 +1,6 @@
-import { CONTENT_SUGGESTIONS } from '@/utils/constants';
 import type { ErrorDisplayProps } from '@/types';
+
+import { CONTENT_SUGGESTIONS } from '@/utils/constants';
 
 export default function ErrorDisplay({ error }: ErrorDisplayProps) {
   console.log('error', error);

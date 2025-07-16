@@ -1,6 +1,7 @@
 'use client';
 
 import { useCallback } from 'react';
+
 import { ErrorHandlerOptions } from '@/types';
 
 export function useErrorHandler(options: ErrorHandlerOptions = {}) {
