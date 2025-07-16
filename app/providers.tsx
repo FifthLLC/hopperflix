@@ -10,7 +10,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import ErrorBoundary from './components/ErrorBoundary';
 
-export interface ProvidersProps {
+interface ProvidersProps {
   children: React.ReactNode;
   themeProps?: ThemeProviderProps;
 }

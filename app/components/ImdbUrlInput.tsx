@@ -1,25 +1,9 @@
-import type { ImdbMovieInfo } from '@/types';
+import type { ImdbMovieInfo, ImdbUrlInputProps } from '@/types';
 
 import { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 
 import { parseImdbUrl } from '@/utils/validateImdbUrl';
-
-interface ImdbUrlInputProps {
-  imdbUrl: string;
-  setImdbUrl: (value: string) => void;
-  urlError: string;
-  setUrlError: (value: string) => void;
-  validUrlCount: number;
-  setValidUrlCount: (value: number) => void;
-  savedImdbUrls: string[];
-  setSavedImdbUrls: (value: string[]) => void;
-  imdbMovieInfos: ImdbMovieInfo[];
-  setImdbMovieInfos: (value: ImdbMovieInfo[]) => void;
-  sessionMovies: string[];
-  setSessionMovies: (value: string[]) => void;
-  description?: string;
-}
 
 export default function ImdbUrlInput({
   imdbUrl,
@@ -177,7 +161,7 @@ export default function ImdbUrlInput({
             Saved IMDB URLs ({savedImdbUrls.length} total):
           </p>
           <div className="space-y-2">
-            {savedImdbUrls.map((url, index) => (
+            {savedImdbUrls.map((url: string, index: number) => (
               <div
                 key={index}
                 className="flex items-center justify-between bg-gray-800/30 rounded-lg p-2"

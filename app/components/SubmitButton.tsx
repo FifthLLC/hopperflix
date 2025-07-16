@@ -1,10 +1,4 @@
-interface SubmitButtonProps {
-  isPending: boolean;
-  description: string;
-  imdbUrl: string;
-  savedImdbUrls: string[];
-  onSubmit: () => void;
-}
+import { SubmitButtonProps } from '@/types';
 
 export default function SubmitButton({
   isPending,

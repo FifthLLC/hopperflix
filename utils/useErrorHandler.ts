@@ -1,12 +1,7 @@
 'use client';
 
 import { useCallback } from 'react';
-
-interface ErrorHandlerOptions {
-  onError?: (error: Error) => void;
-  showUserMessage?: boolean;
-  logToConsole?: boolean;
-}
+import { ErrorHandlerOptions } from '@/types';
 
 export function useErrorHandler(options: ErrorHandlerOptions = {}) {
   const { onError, showUserMessage = true, logToConsole = true } = options;

@@ -1,8 +1,4 @@
-interface DescriptionInputProps {
-  description: string;
-  setDescription: (value: string) => void;
-  handleKeyPress: (e: React.KeyboardEvent) => void;
-}
+import type { DescriptionInputProps } from '@/types';
 
 export default function DescriptionInput({
   description,

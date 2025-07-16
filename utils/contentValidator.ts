@@ -1,13 +1,6 @@
 import { validateContent } from './guardrailService';
 
-import { RecommendationRequest } from '@/types';
-
-export interface ValidationResult {
-  isValid: boolean;
-  blockedContent?: string;
-  reasoning?: string;
-  suggestions?: string[];
-}
+import { RecommendationRequest, ValidationResult } from '@/types';
 
 export async function validateUserInput(
   request: RecommendationRequest,

@@ -2,17 +2,7 @@
 
 import React from 'react';
 import { Button } from '@heroui/button';
-
-interface ErrorBoundaryState {
-  hasError: boolean;
-  error?: Error;
-  errorInfo?: React.ErrorInfo;
-}
-
-interface ErrorBoundaryProps {
-  children: React.ReactNode;
-  fallback?: React.ComponentType<{ error: Error; resetError: () => void }>;
-}
+import type { ErrorBoundaryProps, ErrorBoundaryState } from '@/types';
 
 class ErrorBoundary extends React.Component<
   ErrorBoundaryProps,

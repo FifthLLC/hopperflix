@@ -1,9 +1,4 @@
-import { RecommendationData } from '@/types';
-
-interface RecommendationDisplayProps {
-  data: RecommendationData | null;
-  isPending?: boolean;
-}
+import { RecommendationDisplayProps } from '@/types';
 
 export default function RecommendationDisplay({
   data,

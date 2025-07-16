@@ -1,28 +1,7 @@
-import type { ImdbMovieInfo } from '@/types';
-
+import { RecommendationFormProps } from '@/types';
 import DescriptionInput from './DescriptionInput';
 import ImdbUrlInput from './ImdbUrlInput';
 import SubmitButton from './SubmitButton';
-
-interface RecommendationFormProps {
-  description: string;
-  setDescription: (value: string) => void;
-  imdbUrl: string;
-  setImdbUrl: (value: string) => void;
-  urlError: string;
-  setUrlError: (value: string) => void;
-  validUrlCount: number;
-  setValidUrlCount: (value: number) => void;
-  savedImdbUrls: string[];
-  setSavedImdbUrls: (value: string[]) => void;
-  isPending: boolean;
-  handleSubmit: () => void;
-  handleKeyPress: (e: React.KeyboardEvent) => void;
-  imdbMovieInfos?: ImdbMovieInfo[];
-  setImdbMovieInfos?: (value: ImdbMovieInfo[]) => void;
-  sessionMovies?: string[];
-  setSessionMovies?: (value: string[]) => void;
-}
 
 export default function RecommendationForm({
   description,

@@ -1,8 +1,5 @@
 import { CONTENT_SUGGESTIONS } from '@/utils/constants';
-
-interface ErrorDisplayProps {
-  error: string | { message: string; suggestions?: string[] } | null;
-}
+import type { ErrorDisplayProps } from '@/types';
 
 export default function ErrorDisplay({ error }: ErrorDisplayProps) {
   console.log('error', error);

@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { validateContent } from '@/utils/guardrailService';
 import { isValidImdbUrl } from '@/utils/validateImdbUrl';
 import { fetchImdbMovieInfo } from '@/utils/fetchImdbTitle';
-import { ImdbMovieInfoWithUrl } from '@/types/api';
+import { ImdbMovieInfoWithUrl } from '@/types';
 
 export async function POST(request: NextRequest) {
   try {
