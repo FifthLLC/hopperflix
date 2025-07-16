@@ -12,6 +12,11 @@ import { MOVIES, OPENAPI_URL } from '@/utils/constants';
 import { validateContent } from '@/utils/guardrailService';
 import { isValidImdbUrl } from '@/utils/validateImdbUrl';
 import { fetchImdbMovieInfo } from '@/utils/fetchImdbTitle';
+import type { ImdbMovieInfo } from '@/types';
+
+interface ImdbMovieInfoWithUrl extends ImdbMovieInfo {
+  url: string;
+}
 
 const apiKey = process.env.OPENAI_API_KEY;
 
@@ -94,7 +99,7 @@ async function processRecommendation(
     );
   }
 
-  let newMovieInfos: any[] = [];
+  let newMovieInfos: ImdbMovieInfoWithUrl[] = [];
   let blockedMovies: string[] = [];
 
   if (Array.isArray(imdbUrls) && imdbUrls.length > 0) {
@@ -147,7 +152,7 @@ async function processRecommendation(
   if (newMovieInfos.length > 0) {
     enrichedMovies = [
       ...MOVIES,
-      ...newMovieInfos.map((info: any) => {
+      ...newMovieInfos.map((info: ImdbMovieInfoWithUrl) => {
         let str = info.title || info.url;
 
         if (info.genre && info.genre.length > 0)

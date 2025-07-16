@@ -1,4 +1,12 @@
-// Movie list for display
+export const CONTENT_SUGGESTIONS = [
+  '🎬 Search for safe and family-friendly films',
+  '😊 Try comedies, documentaries, or uplifting stories',
+  '🌟 Ask for fun, exciting, or heartwarming movies',
+  '👨‍👩‍👧‍👦 Request movies suitable for all ages',
+  '💕 Look for romantic comedies or feel-good dramas',
+  '🚀 Find action movies or sci-fi adventures (family-friendly)',
+];
+
 export const MOVIES = [
   'The Silence of the Lambs',
   'Pulp Fiction',

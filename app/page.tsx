@@ -1,4 +1,6 @@
 'use client';
+import type { ImdbMovieInfo } from '@/types';
+
 import { useState } from 'react';
 import { useEffect } from 'react';
 
@@ -29,11 +31,8 @@ export default function Home() {
   const addMoviesMutation = useAddMovies();
 
   const [sessionMovies, setSessionMovies] = useState<string[]>([]);
-  const [imdbMovieInfos, setImdbMovieInfos] = useState<any[]>([]);
+  const [imdbMovieInfos, setImdbMovieInfos] = useState<ImdbMovieInfo[]>([]);
   const [guardrailError, setGuardrailError] = useState<string | null>(null);
-  const [guardrailSuggestions, setGuardrailSuggestions] = useState<string[]>(
-    []
-  );
   const [isGuardrailPending, setIsGuardrailPending] = useState(false);
 
   useEffect(() => {
@@ -77,7 +76,6 @@ export default function Home() {
 
   useEffect(() => {
     if (data) {
-      setGuardrailSuggestions([]);
       setGuardrailError(null);
     }
   }, [data]);
@@ -87,10 +85,13 @@ export default function Home() {
     ...sessionMovies.filter((m) => !(moviesData?.movies || []).includes(m)),
     ...imdbMovieInfos
       .map((info) => info.title)
-      .filter(
-        (m) =>
-          !(moviesData?.movies || []).includes(m) && !sessionMovies.includes(m)
-      ),
+      .filter((movie): movie is string => {
+        return (
+          typeof movie === 'string' &&
+          !(moviesData?.movies || []).includes(movie) &&
+          !sessionMovies.includes(movie)
+        );
+      }),
   ];
 
   const handleSubmit = async () => {
@@ -98,7 +99,6 @@ export default function Home() {
       setGuardrailError(
         'Please enter a description of yourself and your preferences.'
       );
-      setGuardrailSuggestions([]);
 
       return;
     }
@@ -119,10 +119,8 @@ export default function Home() {
 
     setUrlError('');
     setGuardrailError(null);
-    setGuardrailSuggestions([]);
     setIsGuardrailPending(true);
 
-    // Only call the recommendation API, do not re-scrape or re-guardrail
     mutate(
       {
         description,
@@ -168,10 +166,7 @@ export default function Home() {
           validUrlCount={validUrlCount}
         />
 
-        <ErrorDisplay
-          error={guardrailError || error}
-          suggestions={guardrailSuggestions}
-        />
+        <ErrorDisplay error={guardrailError || error} />
 
         <RecommendationDisplay
           data={data as RecommendationData}

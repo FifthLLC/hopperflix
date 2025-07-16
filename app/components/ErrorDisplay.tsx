@@ -1,37 +1,24 @@
+import { CONTENT_SUGGESTIONS } from '@/utils/constants';
+
 interface ErrorDisplayProps {
-  error: any;
-  suggestions?: string[];
+  error: string | { message: string; suggestions?: string[] } | null;
 }
 
-export default function ErrorDisplay({
-  error,
-  suggestions,
-}: ErrorDisplayProps) {
+export default function ErrorDisplay({ error }: ErrorDisplayProps) {
+  console.log('error', error);
   if (!error) return null;
+  const errorMessage = typeof error === 'string' ? error : error?.message;
+  const errorSuggestions = typeof error === 'object' ? error?.suggestions : [];
 
   const isContentBlocked =
-    error?.message?.includes('Content blocked') ||
-    error?.message?.includes('CONTENT_BLOCKED') ||
-    (typeof error === 'string' && error.toLowerCase().includes('blocked'));
+    errorSuggestions?.includes('Content blocked') ||
+    errorMessage?.includes('CONTENT_BLOCKED') ||
+    errorMessage.toLowerCase().includes('blocked');
 
   const isSecurityBlocked =
-    error?.message?.includes('Security threat detected') ||
-    error?.message?.includes('SECURITY_BLOCKED') ||
-    (typeof error === 'string' && error.toLowerCase().includes('security'));
-
-  let guardrailSuggestions: string[] =
-    suggestions && suggestions.length > 0
-      ? suggestions
-      : error?.suggestions && Array.isArray(error.suggestions)
-        ? error.suggestions
-        : [
-            '🎬 Search for safe and family-friendly films',
-            '😊 Try comedies, documentaries, or uplifting stories',
-            '🌟 Ask for fun, exciting, or heartwarming movies',
-            '👨‍👩‍👧‍👦 Request movies suitable for all ages',
-            '💕 Look for romantic comedies or feel-good dramas',
-            '🚀 Find action movies or sci-fi adventures (family-friendly)',
-          ];
+    errorMessage?.includes('Security threat detected') ||
+    errorMessage?.includes('SECURITY_BLOCKED') ||
+    errorMessage.toLowerCase().includes('security');
 
   if (isSecurityBlocked) {
     return (
@@ -54,7 +41,7 @@ export default function ErrorDisplay({
                 What you can do instead:
               </h4>
               <ul className="text-red-200 text-sm space-y-2">
-                {guardrailSuggestions.map((s, i) => (
+                {CONTENT_SUGGESTIONS.map((s, i) => (
                   <li key={i} className="flex items-start">
                     <span className="text-red-400 mr-2 mt-0.5">•</span>
                     <span>{s}</span>
@@ -96,7 +83,7 @@ export default function ErrorDisplay({
                 Here are some great alternatives:
               </h4>
               <ul className="text-blue-200 text-sm space-y-2">
-                {guardrailSuggestions.map((s, i) => (
+                {CONTENT_SUGGESTIONS.map((s, i) => (
                   <li key={i} className="flex items-start">
                     <span className="text-blue-400 mr-2 mt-0.5">•</span>
                     <span>{s}</span>
@@ -124,8 +111,7 @@ export default function ErrorDisplay({
         <div>
           <h3 className="text-red-300 font-semibold">Error</h3>
           <p className="text-red-200">
-            {(error as any).message ||
-              'Something went wrong. Please try again.'}
+            {errorMessage || 'Something went wrong. Please try again.'}
           </p>
         </div>
       </div>

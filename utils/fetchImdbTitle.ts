@@ -1,4 +1,6 @@
+import { ImdbMovieInfo } from '@/types';
 import { load } from 'cheerio';
+import type { Element } from 'domhandler';
 
 export async function fetchImdbTitle(url: string): Promise<string | null> {
   try {
@@ -63,17 +65,6 @@ export async function fetchImdbTitle(url: string): Promise<string | null> {
   }
 }
 
-export interface ImdbMovieInfo {
-  title: string | null;
-  year: string | null;
-  genre: string[];
-  description: string | null;
-  rating: string | null;
-  runtime: string | null;
-  director: string | null;
-  cast: string[];
-}
-
 export async function fetchImdbMovieInfo(url: string): Promise<ImdbMovieInfo> {
   try {
     const res = await fetch(url, {
@@ -128,7 +119,7 @@ export async function fetchImdbMovieInfo(url: string): Promise<ImdbMovieInfo> {
 
     let genre: string[] = [];
 
-    $("a[href^='/search/title?genres=']").each((_: any, el: any) => {
+    $("a[href^='/search/title?genres=']").each((_: number, el: Element) => {
       const g = $(el).text().trim();
 
       if (g) genre.push(g);
@@ -141,7 +132,9 @@ export async function fetchImdbMovieInfo(url: string): Promise<ImdbMovieInfo> {
 
       if (jsonLdMatch && jsonLdMatch[1]) {
         try {
-          const json = JSON.parse(jsonLdMatch[1]);
+          type JsonGenre = string | string[];
+          type JsonLd = { genre?: JsonGenre };
+          const json: JsonLd = JSON.parse(jsonLdMatch[1]);
 
           if (json && json.genre) {
             if (Array.isArray(json.genre)) genre = json.genre;
@@ -204,7 +197,9 @@ export async function fetchImdbMovieInfo(url: string): Promise<ImdbMovieInfo> {
 
       if (jsonLdMatch && jsonLdMatch[1]) {
         try {
-          const json = JSON.parse(jsonLdMatch[1]);
+          type JsonDuration = string;
+          type JsonLd = { duration?: JsonDuration };
+          const json: JsonLd = JSON.parse(jsonLdMatch[1]);
 
           if (json && json.duration) {
             runtime = json.duration;
@@ -236,7 +231,9 @@ export async function fetchImdbMovieInfo(url: string): Promise<ImdbMovieInfo> {
 
       if (jsonLdMatch && jsonLdMatch[1]) {
         try {
-          const json = JSON.parse(jsonLdMatch[1]);
+          type JsonDirector = { name: string };
+          type JsonLd = { director?: JsonDirector };
+          const json: JsonLd = JSON.parse(jsonLdMatch[1]);
 
           if (json && json.director) {
             if (Array.isArray(json.director) && json.director[0]?.name)
@@ -250,11 +247,13 @@ export async function fetchImdbMovieInfo(url: string): Promise<ImdbMovieInfo> {
 
     let cast: string[] = [];
 
-    $("a[data-testid='title-cast-item__actor']").each((_: any, el: any) => {
-      const actor = $(el).text().trim();
+    $("a[data-testid='title-cast-item__actor']").each(
+      (_: number, el: Element) => {
+        const actor = $(el).text().trim();
 
-      if (actor) cast.push(actor);
-    });
+        if (actor) cast.push(actor);
+      }
+    );
     if (cast.length === 0) {
       const jsonLdMatch = html.match(
         /<script type="application\/ld\+json">([\s\S]*?)<\/script>/i
@@ -262,11 +261,13 @@ export async function fetchImdbMovieInfo(url: string): Promise<ImdbMovieInfo> {
 
       if (jsonLdMatch && jsonLdMatch[1]) {
         try {
-          const json = JSON.parse(jsonLdMatch[1]);
+          type JsonActor = { name: string };
+          type JsonLd = { actor?: JsonActor[] };
+          const json: JsonLd = JSON.parse(jsonLdMatch[1]);
 
           if (json && json.actor) {
             if (Array.isArray(json.actor))
-              cast = json.actor.map((a: any) => a.name).filter(Boolean);
+              cast = json.actor.map((a) => a.name).filter(Boolean);
           }
         } catch {}
       }

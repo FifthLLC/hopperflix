@@ -1,3 +1,5 @@
+import type { ImdbMovieInfo } from '@/types';
+
 import { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 
@@ -12,8 +14,8 @@ interface ImdbUrlInputProps {
   setValidUrlCount: (value: number) => void;
   savedImdbUrls: string[];
   setSavedImdbUrls: (value: string[]) => void;
-  imdbMovieInfos: any[];
-  setImdbMovieInfos: (value: any[]) => void;
+  imdbMovieInfos: ImdbMovieInfo[];
+  setImdbMovieInfos: (value: ImdbMovieInfo[]) => void;
   sessionMovies: string[];
   setSessionMovies: (value: string[]) => void;
   description?: string;
@@ -37,8 +39,7 @@ export default function ImdbUrlInput({
   const [isAdding, setIsAdding] = useState(false);
   const [addError, setAddError] = useState('');
 
-  // For IMDB scraping
-  const imdbScrapeMutation = useMutation({
+  const imdbScrapeMutation = useMutation<ImdbMovieInfo, Error, string>({
     mutationFn: async (url: string) => {
       const response = await fetch('/api/imdb-scraping', {
         method: 'POST',
@@ -119,8 +120,12 @@ export default function ImdbUrlInput({
         setImdbUrl('');
         setValidUrlCount(0);
         setUrlError('');
-      } catch (err: any) {
-        setAddError(err.message || 'Unexpected error adding movie. Try again.');
+      } catch (err: unknown) {
+        setAddError(
+          err instanceof Error
+            ? err.message
+            : 'Unexpected error adding movie. Try again.'
+        );
       } finally {
         setIsAdding(false);
       }

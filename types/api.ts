@@ -1,5 +1,7 @@
 import { RecommendationData, RecommendationRequest } from './index';
 
+import { ImdbMovieInfo } from '@/types';
+
 interface OpenAIChoice {
   message: {
     content: string;
@@ -15,7 +17,7 @@ interface OpenAIUsage {
   total_tokens: number;
 }
 
-export interface OpenAIResponse {
+interface OpenAIResponse {
   id: string;
   object: string;
   created: number;
@@ -33,7 +35,7 @@ interface OpenAIError {
   };
 }
 
-export interface OpenAIRecommendationResponse {
+interface OpenAIRecommendationResponse {
   type: 'recommendation' | 'all_recommended';
   movieTitle?: string;
   reasoning?: string;
@@ -42,7 +44,6 @@ export interface OpenAIRecommendationResponse {
   allTitles?: string[];
 }
 
-// API Response Types
 export interface ApiSuccessResponse<T> {
   success: true;
   data: T;
@@ -59,7 +60,10 @@ export interface ApiErrorResponse {
 
 export type ApiResponse<T> = ApiSuccessResponse<T> | ApiErrorResponse;
 
-// Validation Functions
+export interface ImdbMovieInfoWithUrl extends ImdbMovieInfo {
+  url: string;
+}
+
 export function isOpenAIResponse(obj: unknown): obj is OpenAIResponse {
   return (
     typeof obj === 'object' &&
@@ -151,7 +155,6 @@ export function parseOpenAIRecommendationResponse(
   }
 
   try {
-    // Try to parse as JSON first
     const parsed = JSON.parse(content);
 
     if (isOpenAIRecommendationResponse(parsed)) {
@@ -160,7 +163,6 @@ export function parseOpenAIRecommendationResponse(
 
     throw new Error('Invalid recommendation response format');
   } catch (parseError) {
-    // Fallback to legacy text parsing for backward compatibility
     const trimmedContent = content.trim();
 
     if (trimmedContent.startsWith('ALL_RECOMMENDED:')) {

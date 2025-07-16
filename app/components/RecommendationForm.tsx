@@ -1,3 +1,5 @@
+import type { ImdbMovieInfo } from '@/types';
+
 import DescriptionInput from './DescriptionInput';
 import ImdbUrlInput from './ImdbUrlInput';
 import SubmitButton from './SubmitButton';
@@ -16,8 +18,8 @@ interface RecommendationFormProps {
   isPending: boolean;
   handleSubmit: () => void;
   handleKeyPress: (e: React.KeyboardEvent) => void;
-  imdbMovieInfos?: any[];
-  setImdbMovieInfos?: (value: any[]) => void;
+  imdbMovieInfos?: ImdbMovieInfo[];
+  setImdbMovieInfos?: (value: ImdbMovieInfo[]) => void;
   sessionMovies?: string[];
   setSessionMovies?: (value: string[]) => void;
 }

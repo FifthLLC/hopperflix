@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { validateContent } from '@/utils/guardrailService';
 import { isValidImdbUrl } from '@/utils/validateImdbUrl';
 import { fetchImdbMovieInfo } from '@/utils/fetchImdbTitle';
+import { ImdbMovieInfoWithUrl } from '@/types/api';
 
 export async function POST(request: NextRequest) {
   try {
@@ -41,7 +42,7 @@ export async function POST(request: NextRequest) {
     }
 
     let blockedMovies: string[] = [];
-    let movieInfos: any[] = [];
+    let movieInfos: ImdbMovieInfoWithUrl[] = [];
 
     if (Array.isArray(imdbUrls)) {
       for (const url of imdbUrls) {
