@@ -1,4 +1,4 @@
-name: Autodeploy
+name: CD
 
 on:
   push:
@@ -16,24 +16,29 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
 
       - name: Install Yarn
         run: npm install -g yarn
 
+      - name: Debug - Environment Setup
+        run: echo "Setting up environment variables..."
+      - name: Debug - Before Install
+        run: echo "Starting dependency install..."
+
       - name: Install dependencies
         run: yarn install
 
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_REGION }}
+      - name: Debug - After Install
+        run: echo "Dependencies installed."
 
-      - name: Deploy with Yarn
+      - name: SST Deploy
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_REGION: ${{ secrets.AWS_REGION }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: yarn deploy
+
+      - name: Debug - After Deploy
+        run: echo "Deployment completed."

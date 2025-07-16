@@ -12,7 +12,6 @@ import MoviesListToRecommend from './components/MoviesToRecommend';
 import Features from './components/Features';
 
 import { RecommendationData } from '@/types';
-import { parseImdbUrl } from '@/utils/validateImdbUrl';
 import { useRecommend } from '@/hooks/useRecommend';
 import { useMovies, useAddMovies } from '@/hooks/useMovies';
 
@@ -103,20 +102,6 @@ export default function Home() {
       return;
     }
 
-    const currentImdbUrl = parseImdbUrl(imdbUrl);
-
-    if (imdbUrl.trim() && !currentImdbUrl) {
-      setUrlError(
-        'Please enter a valid IMDB URL (e.g., https://www.imdb.com/title/tt0133093/)'
-      );
-
-      return;
-    }
-
-    const allImdbUrls = currentImdbUrl
-      ? Array.from(new Set([...savedImdbUrls, currentImdbUrl]))
-      : savedImdbUrls;
-
     setUrlError('');
     setGuardrailError(null);
     setIsGuardrailPending(true);
@@ -124,7 +109,7 @@ export default function Home() {
     mutate(
       {
         description,
-        imdbUrls: allImdbUrls.length > 0 ? allImdbUrls : undefined,
+        // Don't send imdbUrls when recommend API is working - they're not needed
       },
       {
         onSettled: () => {

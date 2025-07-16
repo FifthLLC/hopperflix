@@ -1,0 +1,90 @@
+name: CI
+
+on:
+  pull_request:
+
+jobs:
+  lint-and-prettier:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install Yarn
+        run: npm install -g yarn
+
+      - name: Debug - Before Install
+        run: echo "Starting dependency install..."
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Debug - After Install
+        run: echo "Dependencies installed."
+
+      - name: Lint
+        run: yarn lint
+
+      - name: Debug - After Lint
+        run: echo "Lint completed."
+
+      - name: Check formatting
+        run: yarn prettier --check .
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install Yarn
+        run: npm install -g yarn
+
+      - name: Debug - Before Install
+        run: echo "Starting dependency install..."
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Debug - After Install
+        run: echo "Dependencies installed."
+
+      - name: Test
+        run: yarn test
+
+      - name: Debug - After Test
+        run: echo "Tests completed."
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install Yarn
+        run: npm install -g yarn
+
+      - name: Debug - Before Install
+        run: echo "Starting dependency install..."
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Build
+        run: yarn build
