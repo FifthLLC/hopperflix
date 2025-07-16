@@ -1,23 +1,22 @@
-name: CI/CD
+name: CD
 
 on:
   push:
     branches:
-      - minas/hopper
-  pull_request:
+      - main
 
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '22'
 
       - name: Install Yarn
         run: npm install -g yarn
@@ -31,26 +30,7 @@ jobs:
       - name: Debug - After Install
         run: echo "Dependencies installed."
 
-      - name: Lint
-        run: yarn lint
-
-      - name: Debug - After Lint
-        run: echo "Lint completed."
-
-      - name: Test
-        run: yarn test
-
-      - name: Debug - After Test
-        run: echo "Tests completed."
-
-      - name: Check formatting
-        run: yarn format:check
-
-      - name: Debug - Before Deploy
-        run: echo "About to deploy..."
-
       - name: SST Deploy
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
