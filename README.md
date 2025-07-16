@@ -1,4 +1,4 @@
-# 🎬 HopperFlix - AI-Powered Movie Recommendation Engine
+# 🎬 MD HopperFlix - AI-Powered Movie Recommendation Engine
 
 HopperFlix is an intelligent movie recommendation system that uses OpenAI's GPT-4 to provide personalized movie suggestions based on user preferences, demographics, and current situations.
 
