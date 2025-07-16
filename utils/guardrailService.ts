@@ -11,6 +11,8 @@ import {
   GuardrailConfig,
 } from '@/types/guardrail';
 
+import { processJSONBody } from '@/utils/api.utils';
+
 // Default guardrail configuration
 const DEFAULT_CONFIG: GuardrailConfig = {
   enabled: true,
@@ -69,7 +71,7 @@ export async function validateContent(
         'Content-Type': 'application/json',
         Authorization: `Bearer ${apiKey}`,
       },
-      body: JSON.stringify({
+      body: processJSONBody({
         ...getOpenAiModelOptions('gpt-4', 0.1, 200),
         messages: messages,
       }),

@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 
-import { safeFetch } from '@/utils/api.utils';
+import { safeFetch, processJSONBody } from '@/utils/api.utils';
 import { useErrorHandler } from './useErrorHandler';
 
 import { RecommendationData, RecommendationRequest } from '@/types';
@@ -19,7 +19,7 @@ export const useRecommend = () => {
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify(data),
+          body: processJSONBody(data),
         });
       } catch (error) {
         handleError(error, 'API recommendation request');

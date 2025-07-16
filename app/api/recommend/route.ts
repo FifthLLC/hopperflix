@@ -7,6 +7,7 @@ import {
   isOpenAIError,
   isRecommendationRequest,
   parseOpenAIResponse,
+  processJSONBody,
 } from '@/utils/api.utils';
 import {
   getOpenAiModelOptions,
@@ -192,7 +193,7 @@ async function processRecommendation(
       'Content-Type': 'application/json',
       Authorization: `Bearer ${apiKey}`,
     },
-    body: JSON.stringify({
+    body: processJSONBody({
       ...getOpenAiModelOptions('gpt-4', 0.1, 20),
       messages: messages,
     }),

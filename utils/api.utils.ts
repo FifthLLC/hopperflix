@@ -181,3 +181,7 @@ export function createApiErrorResponse(
     },
   };
 }
+
+export function processJSONBody(obj: any): string {
+  return JSON.stringify(obj);
+}

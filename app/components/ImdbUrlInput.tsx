@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 
 import { parseImdbUrl } from '@/utils/validateImdbUrl';
+import { processJSONBody } from '@/utils/api.utils';
 
 export default function ImdbUrlInput({
   imdbUrl,
@@ -28,7 +29,7 @@ export default function ImdbUrlInput({
       const response = await fetch('/api/imdb-scraping', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ url }),
+        body: processJSONBody({ url }),
       });
 
       if (!response.ok)
@@ -43,7 +44,7 @@ export default function ImdbUrlInput({
       const response = await fetch('/api/guardrail', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ imdbUrls }),
+        body: processJSONBody({ imdbUrls }),
       });
 
       const data = await response.json();

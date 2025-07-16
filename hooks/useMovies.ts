@@ -1,4 +1,5 @@
 import { useQuery, useMutation } from '@tanstack/react-query';
+import { processJSONBody } from '@/utils/api.utils';
 
 export const useMovies = () => {
   return useQuery<{ movies: string[] }, Error>({
@@ -19,7 +20,7 @@ export const useAddMovies = () => {
       const response = await fetch('/api/movies', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
+        body: processJSONBody(data),
       });
 
       if (!response.ok) {
