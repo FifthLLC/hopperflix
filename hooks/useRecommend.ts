@@ -1,10 +1,9 @@
 import { useMutation } from '@tanstack/react-query';
 
-import { safeFetch } from './apiValidation';
+import { safeFetch } from '@/utils/api.utils';
 import { useErrorHandler } from './useErrorHandler';
 
 import { RecommendationData, RecommendationRequest } from '@/types';
-import { isRecommendationData } from '@/types/api';
 
 export const useRecommend = () => {
   const { handleError } = useErrorHandler({
@@ -15,17 +14,13 @@ export const useRecommend = () => {
   return useMutation<RecommendationData, Error, RecommendationRequest>({
     mutationFn: async (data: RecommendationRequest) => {
       try {
-        return await safeFetch<RecommendationData>(
-          '/api/recommend',
-          {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data),
+        return await safeFetch<RecommendationData>('/api/recommend', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
           },
-          isRecommendationData
-        );
+          body: JSON.stringify(data),
+        });
       } catch (error) {
         handleError(error, 'API recommendation request');
         throw error;

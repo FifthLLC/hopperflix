@@ -7,7 +7,7 @@ import {
   isOpenAIError,
   isRecommendationRequest,
   parseOpenAIResponse,
-} from '@/types/api';
+} from '@/utils/api.utils';
 import { MOVIES, OPENAPI_URL } from '@/utils/constants';
 import { validateContent } from '@/utils/guardrailService';
 import { isValidImdbUrl } from '@/utils/validateImdbUrl';

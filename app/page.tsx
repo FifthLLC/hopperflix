@@ -13,8 +13,8 @@ import Features from './components/Features';
 
 import { RecommendationData } from '@/types';
 import { parseImdbUrl } from '@/utils/validateImdbUrl';
-import { useRecommend } from '@/utils/useRecommend';
-import { useMovies, useAddMovies } from '@/utils/useMovies';
+import { useRecommend } from '@/hooks/useRecommend';
+import { useMovies, useAddMovies } from '@/hooks/useMovies';
 
 export default function Home() {
   const [description, setDescription] = useState('');
