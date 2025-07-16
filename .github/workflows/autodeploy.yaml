@@ -1,20 +1,21 @@
-name: Autodeploy
+name: CI/CD
 
 on:
   push:
     branches:
       - main
+  pull_request:
 
 jobs:
-  deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v3
         with:
           node-version: '20'
 
@@ -22,16 +23,23 @@ jobs:
         run: npm install -g yarn
 
       - name: Install dependencies
-        run: yarn install
+        run: yarn install --frozen-lockfile
 
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_REGION }}
+      - name: Debug - before lint
+        run: echo "About to lint"
+      - name: Lint
+        run: yarn lint
+      - name: Debug - after lint
+        run: echo "Lint finished"
 
-      - name: Deploy with Yarn
+      - name: Test
+        run: yarn test
+
+      - name: Check formatting
+        run: yarn format:check
+
+      - name: SST Deploy
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
