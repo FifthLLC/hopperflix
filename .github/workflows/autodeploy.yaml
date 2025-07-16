@@ -17,26 +17,38 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '20'
+          node-version: '18' # Downgraded for better compatibility
 
       - name: Install Yarn
         run: npm install -g yarn
 
-      - name: Install dependencies
-        run: yarn install --frozen-lockfile
+      - name: Debug - Before Install
+        run: echo "Starting dependency install..."
 
-      - name: Debug - before lint
-        run: echo "About to lint"
+      - name: Install dependencies
+        # Temporarily removing --frozen-lockfile to see if install hangs
+        run: yarn install
+
+      - name: Debug - After Install
+        run: echo "Dependencies installed."
+
       - name: Lint
         run: yarn lint
-      - name: Debug - after lint
-        run: echo "Lint finished"
+
+      - name: Debug - After Lint
+        run: echo "Lint completed."
 
       - name: Test
         run: yarn test
 
+      - name: Debug - After Test
+        run: echo "Tests completed."
+
       - name: Check formatting
         run: yarn format:check
+
+      - name: Debug - Before Deploy
+        run: echo "About to deploy..."
 
       - name: SST Deploy
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
@@ -45,3 +57,6 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_REGION: ${{ secrets.AWS_REGION }}
         run: yarn deploy
+
+      - name: Debug - After Deploy
+        run: echo "Deployment completed."
